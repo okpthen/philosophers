@@ -1,5 +1,5 @@
 NAME = philo
-SRC = src/main.c
+SRC = src/main.c src/philosophers/init_philo.c src/utils/check_input.c src/utils/ft_atoi.c
 OBJ = $(SRC:.c=.o)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror

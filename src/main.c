@@ -6,7 +6,7 @@
 /*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:12:25 by kazokada          #+#    #+#             */
-/*   Updated: 2024/05/20 03:23:40 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/20 11:57:49 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 int	main(int argc, char **argv)
 {
-	if (argc < 5  || 6 < argc)
+	t_rule	*rule;
+	t_philo	*philo;
+
+	if (argc < 5  || 6 < argc || check_input(rule, argv))
 		printf("input correct arg\n");
+	philo = init_philo(rule);
+	free(philo);
 	return (0);
 }
