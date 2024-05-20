@@ -6,7 +6,7 @@
 /*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:05:15 by kazokada          #+#    #+#             */
-/*   Updated: 2024/05/20 11:54:20 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/20 13:00:36 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@
 # define SLEEP 3
 
 int		ft_atoi(char *str);
-int		check_input(t_rule *rule, char **argv);
+t_rule	*check_input(char **argv);
 t_philo	*init_philo(t_rule *rule);
+void	free_all(t_philo *philo, t_rule *rule);
 
 #endif

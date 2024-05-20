@@ -1,6 +1,7 @@
 NAME = philo
-SRC = src/main.c src/philosophers/init_philo.c src/utils/check_input.c src/utils/ft_atoi.c
-OBJ = $(SRC:.c=.o)
+SRCDIR = srcs srcs/philosophers srcs/utils
+SRCS   = $(foreach SRCDIR,$(SRCDIR),$(wildcard $(SRCDIR)/*.c))
+OBJ = $(SRCS:.c=.o)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -rf
@@ -21,6 +22,8 @@ fclean: clean
 
 re: fclean all
 
+sanitize: $(OBJ)
+	$(CC) -g -fsanitize=address $(OBJ) -o $(NAME)
 
 echo:
 	@echo $(OBJ)

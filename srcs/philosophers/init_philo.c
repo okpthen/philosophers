@@ -6,19 +6,19 @@
 /*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:09:19 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/20 11:35:40 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:59:56 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philosophers.h"
 
-void	philo_forks(t_philo philo, pthread_mutex_t *fork, int i, int max)
+void	philo_forks(t_philo *philo, pthread_mutex_t *fork, int i, int max)
 {
-	if (i = 0)
-		philo.right = fork[max - 1];
+	if (i == 0)
+		philo->right = fork[max - 1];
 	else
-		philo.right = fork[i - 1];
-	philo.left = fork[i];
+		philo->right = fork[i - 1];
+	philo->left = fork[i];
 }
 
 void	init_fork(pthread_mutex_t *fork, int num)
@@ -43,13 +43,17 @@ t_philo	*init_philo(t_rule *rule)
 	philo = malloc (sizeof(t_philo) * rule->number);
 	fork = malloc (sizeof(pthread_mutex_t) * rule->number);
 	init_fork(fork, rule->number);
+	rule->forks = fork;
 	while (i < rule->number)
 	{
 		philo[i].id = i + 1;
 		philo[i].last_meal = 0;
 		philo[i].status = 0;
 		philo[i].rule = rule;
-		philo_forks(philo[i], fork, i, rule->number);
+		philo[i].meal_time = 0;
+		philo_forks(&philo[i], fork, i, rule->number);
 		i ++;
 	}
+	rule->philos = philo;
+	return (philo);
 }
