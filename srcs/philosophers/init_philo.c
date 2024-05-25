@@ -6,7 +6,7 @@
 /*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:09:19 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/25 21:58:31 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/26 04:06:35 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 void	philo_forks(t_philo *philo, pthread_mutex_t *fork, int i, int max)
 {
+	// if (i == 0)
+	// 	printf("id%d left=%p right=%p max%d\n",i , &fork[i], &fork[max-1], max);
+	// else
+	// 	printf("id%d left=%p right=%p max%d\n",i, &fork[i], &fork[i -1], max);
 	if (i == 0)
 		philo->right = fork[max - 1];
 	else

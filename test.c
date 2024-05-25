@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <sys/time.h>
 #include <unistd.h>
+#include <pthread.h>
 // int main(int argc, char **argv) {
 //   struct timeval tv;
 //   gettimeofday(&tv, NULL);
@@ -10,30 +11,38 @@
 //   return 0;
 // }
 
-int main()
+void	*fnc2(void *arg)
 {
-	struct timeval	tv;
-	struct timeval	tv1;
-	int				now;
-	int				usec;
+	pthread_mutex_t	*mutex;
 
-	now = 0;
-	gettimeofday(&tv, NULL);
-	while (now < 1000)
-	{
-		gettimeofday(&tv1, NULL);
-		usec = tv1.tv_usec - tv.tv_usec;
-		if (usec > 0)
-		{
-			now = (tv1.tv_sec - tv.tv_sec) * 1000 + (tv1.tv_usec - tv.tv_usec) / 1000;
-		}
-		else if (usec < 0)
-		{
-			now = (tv1.tv_sec - tv.tv_sec) * 1000 - (tv.tv_usec - tv1.tv_usec) / 1000;
-		}
-		// now = (tv1.tv_sec - tv.tv_sec) * 1000;
-		printf("%d\n", now);
-		usleep(400);
-	}
-	printf("now=%d\n", now);
+	mutex = arg;
+	pthread_mutex_lock(mutex);
+	while (1)
+		printf("111");
+	pthread_mutex_unlock(mutex);
+}
+
+void	*fnc1(void *arg)
+{
+	pthread_mutex_t	*mutex;
+
+	mutex = arg;
+	pthread_mutex_lock(mutex);
+	while (1)
+		printf("222");
+	pthread_mutex_unlock(mutex);
+}
+
+int	main (void)
+{
+	pthread_t		t_id1;
+	pthread_t		t_id2;
+	pthread_mutex_t	mutex;
+
+	pthread_mutex_init(&mutex, NULL);
+	pthread_create(&t_id1, NULL, fnc1, &mutex);
+	pthread_create(&t_id2, NULL, fnc2, &mutex);
+	pthread_join(t_id1, NULL);
+	pthread_join(t_id2, NULL);
+	pthread_mutex_destroy(&mutex);
 }

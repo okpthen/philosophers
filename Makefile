@@ -18,6 +18,7 @@ all: $(NAME)
 
 clean:
 	$(RM) $(OBJ)
+	@$(RM) a.out
 
 fclean: clean
 	$(RM) $(NAME)
