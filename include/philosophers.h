@@ -6,7 +6,7 @@
 /*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:05:15 by kazokada          #+#    #+#             */
-/*   Updated: 2024/05/20 13:00:36 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/25 20:30:08 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,22 @@
 # define THINK 1
 # define EAT 2
 # define SLEEP 3
+# define FORK 4
+# define PHILO_MAX 100
+
+# define MES_FORK "%d_in_ms %d has taken a fork\n"
+# define MES_THINK "%d_in_ms %d is thinking\n"
+# define MES_SLEEP "%d_in_ms %d is sleeping\n"
+# define MES_EAT "%d_in_ms %d is eating\n"
 
 int		ft_atoi(char *str);
 t_rule	*check_input(char **argv);
 t_philo	*init_philo(t_rule *rule);
 void	free_all(t_philo *philo, t_rule *rule);
+void	*philo_rutine(void *arg);
+void	*grem_reaper(void *arg);
+void	*get_time(void *arg);
+void	print_philo(t_philo *philo, int i);
+void	philo_sleeping(t_philo *philo);
 
 #endif

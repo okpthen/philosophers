@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   philo_sleep.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/20 12:58:22 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/25 20:07:57 by kazuhiro         ###   ########.fr       */
+/*   Created: 2024/05/25 20:29:06 by kazuhiro          #+#    #+#             */
+/*   Updated: 2024/05/25 20:35:55 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philosophers.h"
 
-void	free_all(t_philo *philo, t_rule *rule)
+void	philo_sleeping(t_philo *philo)
 {
-	int	i;
+	int	start;
 
-	i = 0;
-	while (i < rule->number)
+	pthread_mutex_lock(&philo->rule->time_m);
+	start = philo->rule->time;
+	pthread_mutex_unlock(&philo->rule->time_m);
+	if (philo->rule->end == 0)
+		print_philo(philo, SLEEP);
+	while (philo->rule->time - start < philo->rule->sleep)
 	{
-		pthread_mutex_destroy(&rule->forks[i]);
-		pthread_mutex_destroy(&philo[i].meal);
-		i ++;
+		if (philo->rule->end == 1)
+			break ;
 	}
-	pthread_mutex_destroy(&rule->time_m);
-	pthread_mutex_destroy(&rule->print);
-	pthread_mutex_destroy(&rule->end);
-	free(rule->forks);
-	free(philo);
-	free(rule);
 }

@@ -6,7 +6,7 @@
 /*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 10:50:33 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/20 12:52:05 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/25 20:07:49 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,15 @@ t_rule	*check_input(char **argv)
 	else
 		rule->finish = 0;
 	if (rule->number < 0 || rule->die < 0 || rule->eat < 0
-		|| rule ->sleep < 0 || rule ->time < 0)
+		|| rule ->sleep < 0 || rule ->time < 0 || rule->number > PHILO_MAX)
 	{
 		free(rule);
 		return (NULL);
 	}
 	rule->time = -1;
-	rule->dead_flag = 0;
+	rule->end = 0;
+	pthread_mutex_init(&rule->time_m, NULL);
+	pthread_mutex_init(&rule->print, NULL);
+	pthread_mutex_init(&rule->end_m, NULL);
 	return (rule);
 }

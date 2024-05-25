@@ -6,50 +6,62 @@
 /*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:35:18 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/20 17:23:50 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/25 20:07:30 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philosophers.h"
 
-void	get_time(t_rule *r)
+int	get_time_sub(int sec, int msec)
 {
-	int	t;
+	if (msec > 0)
+	{
+		msec = msec / 1000;
+		return (sec + msec);
+	}
+	else
+	{
+		msec = (-1 * msec) / 1000;
+		return (sec - msec);
+	}
+	return (0);
+}
 
+void	*get_time(void *arg)
+{
+	int		msec;
+	int		sec;
+	t_rule	*r;
+
+	r = arg;
 	r->time = 0;
 	gettimeofday(&r->start, NULL);
 	while (1)
 	{
 		gettimeofday(&r->now, NULL);
-		t = r->now.tv_usec - r->start.tv_usec;
-		if (t > 0)
-		{
-			t = t / 1000;
-			r->time = (r->now.tv_sec - r->start.tv_sec) * 1000 + t;
-		}
-		else
-		{
-			t = (-1 * t) / 1000;
-			r->time = (r->now.tv_sec - r->start.tv_sec) * 1000 - t;
-		}
-		usleep(400);
-		if (r->dead_flag == 1)
+		msec = r->now.tv_usec - r->start.tv_usec;
+		sec = (r->now.tv_sec - r->start.tv_sec) * 1000;
+		r->time = get_time_sub(sec, msec);//共有データ
+		if (r->end == 1)
 			break ;
 	}
+	return (NULL);
 }
 
-void	grem_reaper(t_rule *rule)
+void	*grem_reaper(void *arg)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	t_rule	*rule;
 
 	i = 0;
-	while (rule->dead_flag == 0)
+	rule = arg;
+	while (rule->end == 0)
 	{
-		j = rule->philos[i].last_meal;
+		j = rule->philos[i].last_meal;//共有データ
 		if (rule->die < rule->time - j)
 		{
-			rule->dead_flag = 1;
+			rule->end = 1;//共有データ
 			break ;
 		}
 		i ++;
@@ -57,4 +69,6 @@ void	grem_reaper(t_rule *rule)
 			i = 0;
 		usleep(100);
 	}
+	(void)arg;
+	return (NULL);
 }

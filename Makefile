@@ -1,5 +1,5 @@
 NAME = philo
-SRCDIR = srcs srcs/philosophers srcs/utils
+SRCDIR = srcs srcs/philosophers srcs/utils srcs/time_gremreaper
 SRCS   = $(foreach SRCDIR,$(SRCDIR),$(wildcard $(SRCDIR)/*.c))
 OBJ = $(SRCS:.c=.o)
 CC = cc
@@ -27,3 +27,18 @@ sanitize: $(OBJ)
 
 echo:
 	@echo $(OBJ)
+
+1:
+	./philo 1 800 200 200
+
+2:
+	./philo 5 800 200 200
+
+3:
+	./philo 5 800 200 200 7
+
+4:
+	./philo 4 410 200 200
+
+5:
+	./philo 4 310 200 100

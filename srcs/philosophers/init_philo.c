@@ -6,7 +6,7 @@
 /*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:09:19 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/20 16:59:56 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/25 20:06:58 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_philo	*init_philo(t_rule *rule)
 		philo[i].status = 0;
 		philo[i].rule = rule;
 		philo[i].meal_time = 0;
+		pthread_mutex_init(&philo[i].meal, NULL);
 		philo_forks(&philo[i], fork, i, rule->number);
 		i ++;
 	}

@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/20 12:58:22 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/25 20:07:57 by kazuhiro         ###   ########.fr       */
+/*   Created: 2024/05/25 18:36:40 by kazuhiro          #+#    #+#             */
+/*   Updated: 2024/05/25 18:57:14 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philosophers.h"
 
-void	free_all(t_philo *philo, t_rule *rule)
+void	print_philo(t_philo *philo, int i)
 {
-	int	i;
-
-	i = 0;
-	while (i < rule->number)
+	pthread_mutex_lock(&philo->rule->print);
+	if (i == FORK)
+		printf(MES_FORK, philo->id, philo->rule->time);
+	else if (i == THINK)
+		printf(MES_THINK, philo->id, philo->rule->time);
+	else if (i == SLEEP)
+		printf(MES_SLEEP, philo->id, philo->rule->time);
+	else if (i == EAT)
 	{
-		pthread_mutex_destroy(&rule->forks[i]);
-		pthread_mutex_destroy(&philo[i].meal);
-		i ++;
+		printf(MES_FORK, philo->id, philo->rule->time);
+		printf(MES_EAT, philo->id, philo->rule->time);
 	}
-	pthread_mutex_destroy(&rule->time_m);
-	pthread_mutex_destroy(&rule->print);
-	pthread_mutex_destroy(&rule->end);
-	free(rule->forks);
-	free(philo);
-	free(rule);
+	pthread_mutex_unlock(&philo->rule->print);
 }
