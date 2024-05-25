@@ -6,7 +6,7 @@
 /*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:35:18 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/25 20:07:30 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/25 21:47:28 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,34 @@ void	*get_time(void *arg)
 		r->time = get_time_sub(sec, msec);//共有データ
 		if (r->end == 1)
 			break ;
+		// if (r->time % 1000 == 0)
+		// 	printf("%d\n", r->time);
+		usleep(400);
 	}
 	return (NULL);
 }
 
 void	*grem_reaper(void *arg)
 {
-	int		i;
-	int		j;
-	t_rule	*rule;
+	// int		i;
+	// int		j;
+	// t_rule	*rule;
 
-	i = 0;
-	rule = arg;
-	while (rule->end == 0)
-	{
-		j = rule->philos[i].last_meal;//共有データ
-		if (rule->die < rule->time - j)
-		{
-			rule->end = 1;//共有データ
-			break ;
-		}
-		i ++;
-		if (i == rule->number)
-			i = 0;
-		usleep(100);
-	}
+	// i = 0;
+	// rule = arg;
+	// while (rule->end == 0)
+	// {
+	// 	j = rule->philos[i].last_meal;//共有データ
+	// 	if (rule->die < rule->time - j)
+	// 	{
+	// 		rule->end = 1;//共有データ
+	// 		break ;
+	// 	}
+	// 	i ++;
+	// 	if (i == rule->number)
+	// 		i = 0;
+	// 	usleep(100);
+	// }
 	(void)arg;
 	return (NULL);
 }

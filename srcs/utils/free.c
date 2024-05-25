@@ -6,7 +6,7 @@
 /*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:58:22 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/25 20:07:57 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/25 21:33:45 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_all(t_philo *philo, t_rule *rule)
 	}
 	pthread_mutex_destroy(&rule->time_m);
 	pthread_mutex_destroy(&rule->print);
-	pthread_mutex_destroy(&rule->end);
+	pthread_mutex_destroy(&rule->end_m);
 	free(rule->forks);
 	free(philo);
 	free(rule);

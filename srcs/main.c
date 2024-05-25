@@ -6,7 +6,7 @@
 /*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:12:25 by kazokada          #+#    #+#             */
-/*   Updated: 2024/05/25 20:08:01 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/25 21:34:06 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	philo = init_philo(rule);
-	// start_meal(philo, rule);
+	start_meal(philo, rule);
 	free_all(philo, rule);
 	return (0);
 }

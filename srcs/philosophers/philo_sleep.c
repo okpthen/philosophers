@@ -6,7 +6,7 @@
 /*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 20:29:06 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/25 20:35:55 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/25 21:32:11 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,14 @@ void	philo_sleeping(t_philo *philo)
 	pthread_mutex_unlock(&philo->rule->time_m);
 	if (philo->rule->end == 0)
 		print_philo(philo, SLEEP);
-	while (philo->rule->time - start < philo->rule->sleep)
+	while ((philo->rule->time - start) < philo->rule->sleep)
 	{
 		if (philo->rule->end == 1)
 			break ;
 	}
+}
+
+void	philo_thinking(t_philo *philo)
+{
+	print_philo(philo, THINK);
 }
