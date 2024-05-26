@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_rutine.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:09:22 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/26 04:16:10 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/26 15:23:00 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,56 +24,56 @@ void	report_meal(t_philo *philo)
 
 void	philo_eat_even(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->right);
+	pthread_mutex_lock(philo->right);
 	if (philo->rule->end == 1)
 	{
-		pthread_mutex_unlock(&philo->right);
+		pthread_mutex_unlock(philo->right);
 		return ;
 	}
 	print_philo(philo, FORK);
-	pthread_mutex_lock(&philo->left);
+	pthread_mutex_lock(philo->left);
 	if (philo->rule->end == 1)
 	{
-		pthread_mutex_unlock(&philo->left);
-		pthread_mutex_unlock(&philo->right);
+		pthread_mutex_unlock(philo->left);
+		pthread_mutex_unlock(philo->right);
 		return ;
 	}
 	print_philo(philo, EAT);
 	report_meal(philo);
-	while (philo->rule->end == 0 && ((philo->rule->time - philo->last_meal) < philo->rule->eat + 1))
+	while (philo->rule->end == 0 && ((philo->rule->time - philo->last_meal)
+			< philo->rule->eat + 1))
 	{
 		usleep(500);
-		// printf("%d %d %d\n",(philo->rule->time - philo->last_meal) , philo->rule->eat, philo->id);
 	}
-	pthread_mutex_unlock(&philo->left);
-	pthread_mutex_unlock(&philo->right);
+	pthread_mutex_unlock(philo->left);
+	pthread_mutex_unlock(philo->right);
 }
 
 void	philo_eat_odd(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->left);
+	pthread_mutex_lock(philo->left);
 	if (philo->rule->end == 1)
 	{
-		pthread_mutex_unlock(&philo->left);
+		pthread_mutex_unlock(philo->left);
 		return ;
 	}
 	print_philo(philo, FORK);
-	pthread_mutex_lock(&philo->right);
+	pthread_mutex_lock(philo->right);
 	if (philo->rule->end == 1)
 	{
-		pthread_mutex_unlock(&philo->left);
-		pthread_mutex_unlock(&philo->right);
+		pthread_mutex_unlock(philo->left);
+		pthread_mutex_unlock(philo->right);
 		return ;
 	}
 	print_philo(philo, EAT);
 	report_meal(philo);
-	while (philo->rule->end == 0 && ((philo->rule->time - philo->last_meal) < philo->rule->eat + 1))
+	while (philo->rule->end == 0 && ((philo->rule->time - philo->last_meal)
+			< philo->rule->eat + 1))
 	{
-		usleep(500);
-		// printf("%d %d %d\n",(philo->rule->time - philo->last_meal) , philo->rule->eat, philo->id);
+		usleep(100);
 	}
-	pthread_mutex_unlock(&philo->left);
-	pthread_mutex_unlock(&philo->right);
+	pthread_mutex_unlock(philo->left);
+	pthread_mutex_unlock(philo->right);
 }
 
 void	*philo_rutine(void *arg)
@@ -81,11 +81,17 @@ void	*philo_rutine(void *arg)
 	t_philo	*philo;
 
 	philo = arg;
-	// printf("%p %p\n", &philo->left, &philo->right);
 	while (philo->rule->end == 0)
 	{
 		if (philo->id % 2 == 0)
-			philo_eat_even(philo);
+		{
+			usleep(200);
+			philo_eat_odd(philo);
+		}
+		else if (philo->id % 2 == 1)
+		{
+			philo_eat_odd(philo);
+		}
 		else
 			philo_eat_odd(philo);
 		philo_sleeping(philo);

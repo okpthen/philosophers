@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   solo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/20 10:41:54 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/26 15:23:47 by kazokada         ###   ########.fr       */
+/*   Created: 2024/05/26 15:26:34 by kazokada          #+#    #+#             */
+/*   Updated: 2024/05/26 15:34:56 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_is_digit(char c)
-{
-	if ('0' <= c && c <= '9')
-		return (1);
-	return (0);
-}
+#include "../../include/philosophers.h"
 
-int	ft_atoi(char *str)
+void	*philo_solo(void *arg)
 {
-	int	i;
+	t_philo	*philo;
 
-	i = 0;
-	while (*str)
+	philo = arg;
+	print_philo(philo, FORK);
+	while (philo->rule->end == 0 && ((philo->rule->time - philo->last_meal)
+			< philo->rule->eat + 1))
 	{
-		if (!ft_is_digit(*str))
-			return (-1);
-		i = (*str - '0') + i * 10;
-		str ++;
+		usleep(500);
 	}
-	return (i);
+	return (NULL);
 }

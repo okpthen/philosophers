@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 10:50:33 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/25 21:38:17 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/26 15:23:42 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_rule	*check_input(char **argv)
 	else
 		rule->finish = 0;
 	if (rule->number < 0 || rule->die < 0 || rule->eat < 0
-		|| rule ->sleep < 0 || rule ->time < 0 || rule->number > PHILO_MAX)
+		|| rule ->sleep < 0 || rule ->finish < 0 || rule->number > PHILO_MAX)
 	{
 		free(rule);
 		return (NULL);

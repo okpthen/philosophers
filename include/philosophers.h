@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:05:15 by kazokada          #+#    #+#             */
-/*   Updated: 2024/05/25 21:32:47 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/26 15:29:03 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,7 @@ void	*get_time(void *arg);
 void	print_philo(t_philo *philo, int i);
 void	philo_sleeping(t_philo *philo);
 void	philo_thinking(t_philo *philo);
+void	*count_meal_time(void *arg);
+void	*philo_solo(void *arg);
 
 #endif

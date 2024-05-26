@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_sleep.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 20:29:06 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/25 21:32:11 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/26 15:23:03 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	philo_sleeping(t_philo *philo)
 	pthread_mutex_unlock(&philo->rule->time_m);
 	if (philo->rule->end == 0)
 		print_philo(philo, SLEEP);
-	while ((philo->rule->time - start) < philo->rule->sleep)
+	while ((philo->rule->time - start) < philo->rule->sleep + 1)
 	{
 		if (philo->rule->end == 1)
 			break ;
@@ -30,5 +30,7 @@ void	philo_sleeping(t_philo *philo)
 
 void	philo_thinking(t_philo *philo)
 {
+	if (philo->rule->end == 1)
+		return ;
 	print_philo(philo, THINK);
 }

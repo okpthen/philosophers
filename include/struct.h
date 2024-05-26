@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:15:17 by kazokada          #+#    #+#             */
-/*   Updated: 2024/05/25 20:05:36 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/26 15:24:14 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_rule
 	pthread_mutex_t	*forks;
 	pthread_t		grem_reaper;
 	pthread_t		clock;
+	pthread_t		finish_meal;
 	t_philo			*philos;
 }	t_rule;
 
@@ -47,8 +48,8 @@ typedef struct s_philo
 	pthread_t		t_id;
 	t_rule			*rule;
 	pthread_mutex_t	meal;
-	pthread_mutex_t	right;
-	pthread_mutex_t	left;
+	pthread_mutex_t	*right;
+	pthread_mutex_t	*left;
 }	t_philo;
 
 #endif
