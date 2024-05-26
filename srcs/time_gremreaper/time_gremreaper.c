@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time_gremreaper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:35:18 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/26 15:23:37 by kazokada         ###   ########.fr       */
+/*   Updated: 2024/05/27 00:54:29 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	*grem_reaper(void *arg)
 		if (rule->die < (rule->time - j + 1))
 		{
 			rule->end = 1;
-			printf("%d_in_ms %d died\n", rule->time, i +1);
+			printf("%d %d died\n", rule->time, i +1);
 			break ;
 		}
 		i ++;

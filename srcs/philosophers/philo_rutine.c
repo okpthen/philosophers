@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_rutine.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:09:22 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/26 15:23:00 by kazokada         ###   ########.fr       */
+/*   Updated: 2024/05/27 01:20:41 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	philo_eat_odd(t_philo *philo)
 	pthread_mutex_lock(philo->right);
 	if (philo->rule->end == 1)
 	{
-		pthread_mutex_unlock(philo->left);
 		pthread_mutex_unlock(philo->right);
+		pthread_mutex_unlock(philo->left);
 		return ;
 	}
 	print_philo(philo, EAT);
@@ -79,21 +79,22 @@ void	philo_eat_odd(t_philo *philo)
 void	*philo_rutine(void *arg)
 {
 	t_philo	*philo;
+	int		i;
 
+	i = 0;
 	philo = arg;
 	while (philo->rule->end == 0)
 	{
-		if (philo->id % 2 == 0)
+		if (philo->id % 2 == 0 && i == 0)
 		{
-			usleep(200);
+			usleep(1000);
 			philo_eat_odd(philo);
 		}
-		else if (philo->id % 2 == 1)
-		{
+		else if (philo->id % 2 == 1 && i == 0)
 			philo_eat_odd(philo);
-		}
 		else
 			philo_eat_odd(philo);
+		i = 1;
 		philo_sleeping(philo);
 		philo_thinking(philo);
 	}

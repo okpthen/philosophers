@@ -4,6 +4,8 @@ SRCS   = $(foreach SRCDIR,$(SRCDIR),$(wildcard $(SRCDIR)/*.c))
 OBJ = $(SRCS:.c=.o)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+CFLAGS += -g -fsanitize=thread
+# CFLAGS += -g -fsanitize=address
 RM = rm -rf
 
 .o:.c
@@ -30,16 +32,16 @@ echo:
 	@echo $(OBJ)
 
 1:
-	time ./philo 1 800 200 200
+	./philo 1 800 200 200
 
 2:
-	time ./philo 5 800 200 200
+	./philo 5 800 200 200
 
 3:
-	time ./philo 5 800 200 200 5
+	./philo 5 800 200 200 5
 
 4:
-	time ./philo 4 410 200 200
+	./philo 4 410 200 200
 
 5:
-	time ./philo 4 310 200 100
+	./philo 4 310 200 100
