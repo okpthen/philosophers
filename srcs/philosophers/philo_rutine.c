@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_rutine.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:09:22 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/27 01:20:41 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:18:32 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ void	report_meal(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->meal);
 	philo->meal_time ++;
-	pthread_mutex_lock(&philo->rule->time_m);
-	philo->last_meal = philo->rule->time;
-	pthread_mutex_unlock(&philo->rule->time_m);
+	philo->last_meal = get_time(0);///////
 	pthread_mutex_unlock(&philo->meal);
 }
 
@@ -40,7 +38,7 @@ void	philo_eat_even(t_philo *philo)
 	}
 	print_philo(philo, EAT);
 	report_meal(philo);
-	while (philo->rule->end == 0 && ((philo->rule->time - philo->last_meal)
+	while (philo->rule->end == 0 && ((get_time(0) - philo->last_meal)
 			< philo->rule->eat + 1))
 	{
 		usleep(500);
@@ -67,10 +65,10 @@ void	philo_eat_odd(t_philo *philo)
 	}
 	print_philo(philo, EAT);
 	report_meal(philo);
-	while (philo->rule->end == 0 && ((philo->rule->time - philo->last_meal)
+	while (philo->rule->end == 0 && ((get_time(0) - philo->last_meal)
 			< philo->rule->eat + 1))
 	{
-		usleep(100);
+		usleep(400);
 	}
 	pthread_mutex_unlock(philo->left);
 	pthread_mutex_unlock(philo->right);

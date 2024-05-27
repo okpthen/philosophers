@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:15:17 by kazokada          #+#    #+#             */
-/*   Updated: 2024/05/27 01:04:50 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:28:41 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,7 @@ typedef struct s_rule
 	int				eat;
 	int				sleep;
 	int				finish;
-	int				time;
 	int				end;
-	struct timeval	start;
-	struct timeval	now;
-	pthread_mutex_t	time_m;
 	pthread_mutex_t	print;
 	pthread_mutex_t	end_m;
 	pthread_mutex_t	*forks;

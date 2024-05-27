@@ -6,7 +6,7 @@
 /*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:26:34 by kazokada          #+#    #+#             */
-/*   Updated: 2024/05/26 15:34:56 by kazokada         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:27:54 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,8 @@ void	*philo_solo(void *arg)
 
 	philo = arg;
 	print_philo(philo, FORK);
-	while (philo->rule->end == 0 && ((philo->rule->time - philo->last_meal)
+	while (philo->rule->end == 0 && ((get_time(0) - philo->last_meal)
 			< philo->rule->eat + 1))
-	{
 		usleep(500);
-	}
 	return (NULL);
 }

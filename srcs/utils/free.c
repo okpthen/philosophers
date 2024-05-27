@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:58:22 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/27 01:04:43 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:32:53 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	free_all(t_philo *philo, t_rule *rule)
 		pthread_mutex_destroy(&philo[i].meal);
 		i ++;
 	}
-	pthread_mutex_destroy(&rule->time_m);
 	pthread_mutex_destroy(&rule->print);
 	pthread_mutex_destroy(&rule->end_m);
 	free(rule->forks);

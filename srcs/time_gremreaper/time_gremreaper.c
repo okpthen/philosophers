@@ -3,17 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   time_gremreaper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:35:18 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/27 00:54:29 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:22:59 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philosophers.h"
 
-int	get_time_sub(int sec, int msec)
+int	get_time_sub(struct timeval *start)
 {
+	struct timeval	now;
+	int				msec;
+	int				sec;
+
+	gettimeofday(&now, NULL);
+	sec = (now.tv_sec - start->tv_sec) * 1000;
+	msec = now.tv_usec - start->tv_usec;
 	if (msec > 0)
 	{
 		msec = msec / 1000;
@@ -27,25 +34,23 @@ int	get_time_sub(int sec, int msec)
 	return (0);
 }
 
-void	*get_time(void *arg)
+int	get_time(int i)
 {
-	int		msec;
-	int		sec;
-	t_rule	*r;
+	static struct timeval	*start;
 
-	r = arg;
-	r->time = 0;
-	gettimeofday(&r->start, NULL);
-	while (1)
+	if (i == 1)
 	{
-		gettimeofday(&r->now, NULL);
-		msec = r->now.tv_usec - r->start.tv_usec;
-		sec = (r->now.tv_sec - r->start.tv_sec) * 1000;
-		r->time = get_time_sub(sec, msec);
-		if (r->end == 1)
-			break ;
+		start = malloc (sizeof (struct timeval));
+		gettimeofday(start, NULL);
+		return (0);
 	}
-	return (NULL);
+	if (start == NULL)
+		return (0);
+	if (i == 0)
+		return (get_time_sub(start));
+	if (i == 2)
+		free(start);
+	return (0);
 }
 
 void	*grem_reaper(void *arg)
@@ -58,16 +63,19 @@ void	*grem_reaper(void *arg)
 	rule = arg;
 	while (rule->end == 0)
 	{
+		pthread_mutex_lock(&rule->philos[i].meal);
 		j = rule->philos[i].last_meal;
-		if (rule->die < (rule->time - j + 1))
+		pthread_mutex_unlock(&rule->philos[i].meal);
+		if (rule->die < (get_time(0) - j + 1))
 		{
 			rule->end = 1;
-			printf("%d %d died\n", rule->time, i +1);
+			printf("%d %d died\n", get_time(0), i +1);
 			break ;
 		}
 		i ++;
 		if (i == rule->number)
 			i = 0;
+		usleep(50);
 	}
 	return (NULL);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 10:50:33 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/27 01:04:46 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:32:48 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ t_rule	*check_input(char **argv)
 		free(rule);
 		return (NULL);
 	}
-	rule->time = 0;
 	rule->end = 0;
-	pthread_mutex_init(&rule->time_m, NULL);
 	pthread_mutex_init(&rule->print, NULL);
 	pthread_mutex_init(&rule->end_m, NULL);
 	return (rule);

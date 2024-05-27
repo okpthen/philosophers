@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:05:15 by kazokada          #+#    #+#             */
-/*   Updated: 2024/05/27 01:08:32 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:25:47 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_philo	*init_philo(t_rule *rule);
 void	free_all(t_philo *philo, t_rule *rule);
 void	*philo_rutine(void *arg);
 void	*grem_reaper(void *arg);
-void	*get_time(void *arg);
+int		get_time(int i);
 void	print_philo(t_philo *philo, int i);
 void	philo_sleeping(t_philo *philo);
 void	philo_thinking(t_philo *philo);
