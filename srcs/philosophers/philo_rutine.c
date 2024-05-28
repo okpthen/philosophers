@@ -6,11 +6,21 @@
 /*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:09:22 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/28 23:19:09 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/29 01:22:56 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philosophers.h"
+
+int	value_rule_end(t_philo *philo)
+{
+	int	i;
+
+	pthread_mutex_lock(&philo->rule->end_m);
+	i = philo->rule->end;
+	pthread_mutex_unlock(&philo->rule->end_m);
+	return (i);
+}
 
 void	report_meal(t_philo *philo)
 {
@@ -22,17 +32,20 @@ void	report_meal(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
-	// if (philo->meal_time == 0)
-	// {
-	// 	philo->start = get_time();
-	// 	philo->last_meal = philo->start;
-	// }
+	if (philo->meal_time == 0)
+	{
+		pthread_mutex_lock(&philo->meal);
+		philo->start = get_time();
+		philo->last_meal = philo->start;
+		pthread_mutex_unlock(&philo->meal);
+	}
 	pthread_mutex_lock(philo->left);
 	print_philo(philo, FORK);
 	pthread_mutex_lock(philo->right);
 	print_philo(philo, EAT);
 	report_meal(philo);
-	while (philo->rule->end == 0 && get_time() - philo->last_meal < philo->rule->eat + 1)
+	while (value_rule_end(philo) == 0 && get_time()
+		- philo->last_meal < philo->rule->eat + 1)
 	{
 		usleep(100);
 	}
@@ -47,17 +60,17 @@ void	*philo_rutine(void *arg)
 
 	i = 0;
 	philo = arg;
-	philo->start = get_time();
-	pthread_mutex_lock(&philo->meal);
-	philo->last_meal = philo->start;
-	pthread_mutex_unlock(&philo->meal);
-	while (philo->rule->end == 0)
+	// philo->start = get_time();
+	// pthread_mutex_lock(&philo->meal);
+	// philo->last_meal = philo->start;
+	// pthread_mutex_unlock(&philo->meal);
+	while (value_rule_end(philo) == 0)
 	{
 		if (i == 0 && philo->id % 2 == 1)
 			philo_eat(philo);
 		else if (i == 0 && philo->id % 2 == 0)
 		{
-			usleep(400);
+			usleep(500);
 			philo_eat(philo);
 		}
 		else
