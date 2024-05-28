@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:05:15 by kazokada          #+#    #+#             */
-/*   Updated: 2024/05/28 15:07:03 by kazokada         ###   ########.fr       */
+/*   Updated: 2024/05/28 21:51:20 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@
 # define FORK 4
 # define PHILO_MAX 300
 
-# define MES_FORK "%d %d has taken a fork\n"
-# define MES_THINK "%d %d is thinking\n"
-# define MES_SLEEP "%d %d is sleeping\n"
-# define MES_EAT "%d %d is eating\n"
+# define MES_FORK "%ld %d has taken a fork\n"
+# define MES_THINK "%ld %d is thinking\n"
+# define MES_SLEEP "%ld %d is sleeping\n"
+# define MES_EAT "%ld %d is eating\n"
 
 int		ft_atoi(char *str);
 t_rule	*check_input(char **argv);
@@ -38,7 +38,7 @@ t_philo	*init_philo(t_rule *rule);
 void	free_all(t_philo *philo, t_rule *rule);
 void	*philo_rutine(void *arg);
 void	*grem_reaper(void *arg);
-int		get_time(int i);
+long	get_time(void);
 void	print_philo(t_philo *philo, int i);
 void	philo_sleeping(t_philo *philo);
 void	philo_thinking(t_philo *philo);

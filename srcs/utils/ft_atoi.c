@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 10:41:54 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/27 15:32:58 by kazokada         ###   ########.fr       */
+/*   Updated: 2024/05/28 21:34:27 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	ft_atoi(char *str)
 	int	i;
 
 	i = 0;
+	if (*str == '\0')
+		return (-1);
 	while (*str)
 	{
 		if (!ft_is_digit(*str))

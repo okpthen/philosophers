@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 15:26:34 by kazokada          #+#    #+#             */
-/*   Updated: 2024/05/28 15:06:23 by kazokada         ###   ########.fr       */
+/*   Updated: 2024/05/28 23:22:13 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ void	*philo_solo(void *arg)
 	t_philo	*philo;
 
 	philo = arg;
+	philo->start = get_time();
 	print_philo(philo, FORK);
-	while (philo->rule->end == 0 && ((get_time(0) - philo->last_meal)
-			< philo->rule->eat + 1))
-		usleep(500);
+	pthread_mutex_lock(&philo->meal);
+	philo->last_meal = get_time();
+	pthread_mutex_unlock(&philo->meal);
 	return (NULL);
 }

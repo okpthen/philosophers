@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:12:25 by kazokada          #+#    #+#             */
-/*   Updated: 2024/05/28 15:06:07 by kazokada         ###   ########.fr       */
+/*   Updated: 2024/05/28 21:50:56 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	start_meal(t_philo *philo, t_rule *rule)
 	int	i;
 
 	i = 0;
-	get_time(1);
 	while (i < rule->number)
 	{
 		pthread_create(&philo[i].t_id, NULL, philo_rutine, &philo[i]);
@@ -32,7 +31,6 @@ void	start_meal(t_philo *philo, t_rule *rule)
 		i ++;
 	}
 	pthread_join(rule->grem_reaper, NULL);
-	get_time(2);
 	pthread_join(rule->finish_meal, NULL);
 }
 
@@ -40,10 +38,8 @@ void	start_solomeal(t_philo *philo, t_rule *rule)
 {
 	pthread_create(&philo[0].t_id, NULL, philo_solo, &philo[0]);
 	pthread_create(&rule->grem_reaper, NULL, grem_reaper, rule);
-	get_time(1);
 	pthread_join(philo[0].t_id, NULL);
 	pthread_join(rule->grem_reaper, NULL);
-	get_time(2);
 }
 
 int	main(int argc, char **argv)

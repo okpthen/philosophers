@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:15:17 by kazokada          #+#    #+#             */
-/*   Updated: 2024/05/28 14:49:37 by kazokada         ###   ########.fr       */
+/*   Updated: 2024/05/28 22:13:02 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_rule
 typedef struct s_philo
 {
 	int				id;
-	int				last_meal;
+	long			last_meal;
 	int				meal_time;
 	int				status;
 	long			start;

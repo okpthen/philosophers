@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_sleep.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 20:29:06 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/28 15:06:27 by kazokada         ###   ########.fr       */
+/*   Updated: 2024/05/28 23:07:36 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,21 @@ int	check_end(t_philo *philo)
 
 void	philo_sleeping(t_philo *philo)
 {
-	int	start;
+	long	start;
 
-	start = get_time(0);
-	if (philo->rule->end == 0)
-		print_philo(philo, SLEEP);
-	while ((get_time(0) - start) < philo->rule->sleep + 1)
+	print_philo(philo, SLEEP);
+	start = get_time();
+	while ((get_time() - start) < philo->rule->sleep + 1)
 	{
 		if (check_end(philo))
 			break ;
 	}
-}
-
-void	philo_thinking(t_philo *philo)
-{
-	if (check_end(philo))
-		return ;
 	print_philo(philo, THINK);
 }
+
+// void	philo_thinking(t_philo *philo)
+// {
+// 	if (check_end(philo))
+// 		return ;
+// 	print_philo(philo, THINK);
+// }

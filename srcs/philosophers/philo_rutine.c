@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_rutine.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:09:22 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/28 15:19:21 by kazokada         ###   ########.fr       */
+/*   Updated: 2024/05/28 23:19:09 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,63 +15,29 @@
 void	report_meal(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->meal);
+	philo->last_meal = get_time();
 	philo->meal_time ++;
-	philo->last_meal = get_time(0);
 	pthread_mutex_unlock(&philo->meal);
 }
 
-void	philo_eat_even(t_philo *philo)
+void	philo_eat(t_philo *philo)
 {
-	pthread_mutex_lock(philo->right);
-	// if (philo->rule->end == 1)
+	// if (philo->meal_time == 0)
 	// {
-	// 	pthread_mutex_unlock(philo->right);
-	// 	return ;
+	// 	philo->start = get_time();
+	// 	philo->last_meal = philo->start;
 	// }
-	print_philo(philo, FORK);
 	pthread_mutex_lock(philo->left);
-	// if (philo->rule->end == 1)
-	// {
-	// 	pthread_mutex_unlock(philo->left);
-	// 	pthread_mutex_unlock(philo->right);
-	// 	return ;
-	// }
-	print_philo(philo, EAT);
-	report_meal(philo);
-	while (philo->rule->end == 0 && ((get_time(0) - philo->last_meal)
-			< philo->rule->eat + 1))
-	{
-		usleep(500);
-	}
-	pthread_mutex_unlock(philo->left);
-	pthread_mutex_unlock(philo->right);
-}
-
-void	philo_eat_odd(t_philo *philo)
-{
-	pthread_mutex_lock(philo->left);
-	// if (philo->rule->end == 1)
-	// {
-	// 	pthread_mutex_unlock(philo->left);
-	// 	return ;
-	// }
 	print_philo(philo, FORK);
 	pthread_mutex_lock(philo->right);
-	// if (philo->rule->end == 1)
-	// {
-	// 	pthread_mutex_unlock(philo->right);
-	// 	pthread_mutex_unlock(philo->left);
-	// 	return ;
-	// }
 	print_philo(philo, EAT);
 	report_meal(philo);
-	while (philo->rule->end == 0 && ((get_time(0) - philo->last_meal)
-			< philo->rule->eat + 1))
+	while (philo->rule->end == 0 && get_time() - philo->last_meal < philo->rule->eat + 1)
 	{
-		usleep(400);
+		usleep(100);
 	}
-	pthread_mutex_unlock(philo->left);
 	pthread_mutex_unlock(philo->right);
+	pthread_mutex_unlock(philo->left);
 }
 
 void	*philo_rutine(void *arg)
@@ -81,20 +47,22 @@ void	*philo_rutine(void *arg)
 
 	i = 0;
 	philo = arg;
+	philo->start = get_time();
+	pthread_mutex_lock(&philo->meal);
+	philo->last_meal = philo->start;
+	pthread_mutex_unlock(&philo->meal);
 	while (philo->rule->end == 0)
 	{
-		if (philo->id % 2 == 0 && i == 0)
+		if (i == 0 && philo->id % 2 == 1)
+			philo_eat(philo);
+		else if (i == 0 && philo->id % 2 == 0)
 		{
-			usleep(1000);
-			philo_eat_odd(philo);
+			usleep(400);
+			philo_eat(philo);
 		}
-		else if (philo->id % 2 == 1 && i == 0)
-			philo_eat_odd(philo);
 		else
-			philo_eat_odd(philo);
-		i = 1;
+			philo_eat(philo);
 		philo_sleeping(philo);
-		philo_thinking(philo);
 	}
 	return (NULL);
 }
