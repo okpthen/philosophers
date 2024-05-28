@@ -6,7 +6,7 @@
 /*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:09:22 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/29 01:22:56 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/29 03:33:59 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	philo_eat(t_philo *philo)
 {
 	if (philo->meal_time == 0)
 	{
-		pthread_mutex_lock(&philo->meal);
 		philo->start = get_time();
+		pthread_mutex_lock(&philo->meal);
 		philo->last_meal = philo->start;
 		pthread_mutex_unlock(&philo->meal);
 	}
@@ -47,7 +47,7 @@ void	philo_eat(t_philo *philo)
 	while (value_rule_end(philo) == 0 && get_time()
 		- philo->last_meal < philo->rule->eat + 1)
 	{
-		usleep(100);
+		usleep(400);
 	}
 	pthread_mutex_unlock(philo->right);
 	pthread_mutex_unlock(philo->left);
@@ -76,6 +76,7 @@ void	*philo_rutine(void *arg)
 		else
 			philo_eat(philo);
 		philo_sleeping(philo);
+		i ++;
 	}
 	return (NULL);
 }
