@@ -6,7 +6,7 @@
 /*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:12:25 by kazokada          #+#    #+#             */
-/*   Updated: 2024/05/27 15:28:17 by kazokada         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:06:07 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	start_meal(t_philo *philo, t_rule *rule)
 	int	i;
 
 	i = 0;
+	get_time(1);
 	while (i < rule->number)
 	{
 		pthread_create(&philo[i].t_id, NULL, philo_rutine, &philo[i]);
@@ -24,7 +25,6 @@ void	start_meal(t_philo *philo, t_rule *rule)
 	}
 	pthread_create(&rule->grem_reaper, NULL, grem_reaper, rule);
 	pthread_create(&rule->finish_meal, NULL, count_meal_time, rule);
-	get_time(1);
 	i = 0;
 	while (i < rule->number)
 	{

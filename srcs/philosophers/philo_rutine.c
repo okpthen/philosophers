@@ -6,7 +6,7 @@
 /*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:09:22 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/27 16:18:32 by kazokada         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:19:21 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,26 @@ void	report_meal(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->meal);
 	philo->meal_time ++;
-	philo->last_meal = get_time(0);///////
+	philo->last_meal = get_time(0);
 	pthread_mutex_unlock(&philo->meal);
 }
 
 void	philo_eat_even(t_philo *philo)
 {
 	pthread_mutex_lock(philo->right);
-	if (philo->rule->end == 1)
-	{
-		pthread_mutex_unlock(philo->right);
-		return ;
-	}
+	// if (philo->rule->end == 1)
+	// {
+	// 	pthread_mutex_unlock(philo->right);
+	// 	return ;
+	// }
 	print_philo(philo, FORK);
 	pthread_mutex_lock(philo->left);
-	if (philo->rule->end == 1)
-	{
-		pthread_mutex_unlock(philo->left);
-		pthread_mutex_unlock(philo->right);
-		return ;
-	}
+	// if (philo->rule->end == 1)
+	// {
+	// 	pthread_mutex_unlock(philo->left);
+	// 	pthread_mutex_unlock(philo->right);
+	// 	return ;
+	// }
 	print_philo(philo, EAT);
 	report_meal(philo);
 	while (philo->rule->end == 0 && ((get_time(0) - philo->last_meal)
@@ -50,19 +50,19 @@ void	philo_eat_even(t_philo *philo)
 void	philo_eat_odd(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left);
-	if (philo->rule->end == 1)
-	{
-		pthread_mutex_unlock(philo->left);
-		return ;
-	}
+	// if (philo->rule->end == 1)
+	// {
+	// 	pthread_mutex_unlock(philo->left);
+	// 	return ;
+	// }
 	print_philo(philo, FORK);
 	pthread_mutex_lock(philo->right);
-	if (philo->rule->end == 1)
-	{
-		pthread_mutex_unlock(philo->right);
-		pthread_mutex_unlock(philo->left);
-		return ;
-	}
+	// if (philo->rule->end == 1)
+	// {
+	// 	pthread_mutex_unlock(philo->right);
+	// 	pthread_mutex_unlock(philo->left);
+	// 	return ;
+	// }
 	print_philo(philo, EAT);
 	report_meal(philo);
 	while (philo->rule->end == 0 && ((get_time(0) - philo->last_meal)

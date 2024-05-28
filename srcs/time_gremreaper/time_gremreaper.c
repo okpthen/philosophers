@@ -6,7 +6,7 @@
 /*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:35:18 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/27 16:22:59 by kazokada         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:06:19 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	*grem_reaper(void *arg)
 		i ++;
 		if (i == rule->number)
 			i = 0;
-		usleep(50);
+		usleep(100);
 	}
 	return (NULL);
 }
@@ -84,6 +84,7 @@ void	*count_meal_time(void *arg)
 {
 	int		i;
 	t_rule	*rule;
+	int		j;
 
 	rule = arg;
 	i = 0;
@@ -91,7 +92,11 @@ void	*count_meal_time(void *arg)
 		return (NULL);
 	while (rule->end == 0)
 	{
-		if (rule->finish > rule->philos[i].meal_time)
+		usleep(100);
+		pthread_mutex_lock(&rule->philos[i].meal);
+		j = rule->philos[i].meal_time;
+		pthread_mutex_unlock(&rule->philos[i].meal);
+		if (rule->finish > j)
 		{
 			i = 0;
 			continue ;

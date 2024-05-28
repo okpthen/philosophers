@@ -6,7 +6,7 @@
 /*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:15:17 by kazokada          #+#    #+#             */
-/*   Updated: 2024/05/27 15:28:41 by kazokada         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:49:37 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct s_philo
 	int				last_meal;
 	int				meal_time;
 	int				status;
+	long			start;
+	long			now;
 	pthread_t		t_id;
 	t_rule			*rule;
 	pthread_mutex_t	meal;

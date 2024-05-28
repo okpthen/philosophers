@@ -19,7 +19,6 @@ all: $(NAME)
 clean:
 	$(RM) $(OBJ)
 	@$(RM) a.out
-
 fclean: clean
 	$(RM) $(NAME)
 
@@ -45,3 +44,9 @@ echo:
 
 5:
 	./philo 4 310 200 100
+
+6:
+	./philo 10 800 200 200
+
+7:
+	./philo 100 800 200 200
