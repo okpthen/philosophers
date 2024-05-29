@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_sleep.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 20:29:06 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/28 23:07:36 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:37:15 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,3 @@ void	philo_sleeping(t_philo *philo)
 	}
 	print_philo(philo, THINK);
 }
-
-// void	philo_thinking(t_philo *philo)
-// {
-// 	if (check_end(philo))
-// 		return ;
-// 	print_philo(philo, THINK);
-// }

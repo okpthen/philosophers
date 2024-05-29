@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time_gremreaper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:35:18 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/29 01:12:44 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:54:36 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ int	rule_valur(t_rule *rule)
 	return (i);
 }
 
+void	simulation_end(t_rule *rule)
+{
+	pthread_mutex_lock(&rule->end_m);
+	rule->end = 1;
+	pthread_mutex_unlock(&rule->end_m);
+}
+
 void	*grem_reaper(void *arg)
 {
 	int		i;
@@ -46,9 +53,7 @@ void	*grem_reaper(void *arg)
 		pthread_mutex_unlock(&rule->philos[i].meal);
 		if (rule->die < (get_time() - j + 1))
 		{
-			pthread_mutex_lock(&rule->end_m);
-			rule->end = 1;
-			pthread_mutex_unlock(&rule->end_m);
+			simulation_end(rule);
 			printf("%ld %d died\n", get_time() - j, i +1);
 			break ;
 		}
@@ -70,7 +75,7 @@ void	*count_meal_time(void *arg)
 	i = 0;
 	if (rule->finish == 0)
 		return (NULL);
-	while (rule->end == 0)
+	while (rule_valur(rule) == 0)
 	{
 		usleep(100);
 		pthread_mutex_lock(&rule->philos[i].meal);
@@ -83,11 +88,7 @@ void	*count_meal_time(void *arg)
 		}
 		i ++;
 		if (i == rule->number)
-		{
-			pthread_mutex_lock(&rule->end_m);
-			rule->end = 1;
-			pthread_mutex_unlock(&rule->end_m);
-		}
+			simulation_end(rule);
 	}
 	return (NULL);
 }

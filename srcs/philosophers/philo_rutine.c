@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_rutine.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:09:22 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/29 03:33:59 by kazuhiro         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:52:51 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,6 @@ void	report_meal(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
-	if (philo->meal_time == 0)
-	{
-		philo->start = get_time();
-		pthread_mutex_lock(&philo->meal);
-		philo->last_meal = philo->start;
-		pthread_mutex_unlock(&philo->meal);
-	}
 	pthread_mutex_lock(philo->left);
 	print_philo(philo, FORK);
 	pthread_mutex_lock(philo->right);
@@ -60,17 +53,17 @@ void	*philo_rutine(void *arg)
 
 	i = 0;
 	philo = arg;
-	// philo->start = get_time();
-	// pthread_mutex_lock(&philo->meal);
-	// philo->last_meal = philo->start;
-	// pthread_mutex_unlock(&philo->meal);
+	philo->start = get_time();
+	pthread_mutex_lock(&philo->meal);
+	philo->last_meal = philo->start;
+	pthread_mutex_unlock(&philo->meal);
 	while (value_rule_end(philo) == 0)
 	{
 		if (i == 0 && philo->id % 2 == 1)
 			philo_eat(philo);
 		else if (i == 0 && philo->id % 2 == 0)
 		{
-			usleep(500);
+			usleep(10000);
 			philo_eat(philo);
 		}
 		else
