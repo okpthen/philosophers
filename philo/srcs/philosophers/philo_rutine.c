@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_rutine.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazuhiro <kazuhiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:09:22 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/29 12:52:51 by kazokada         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:45:58 by kazuhiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	philo_eat(t_philo *philo)
 	print_philo(philo, EAT);
 	report_meal(philo);
 	while (value_rule_end(philo) == 0 && get_time()
-		- philo->last_meal < philo->rule->eat + 1)
+		- philo->last_meal < philo->rule->eat)
 	{
-		usleep(400);
+		usleep(100);
 	}
 	pthread_mutex_unlock(philo->right);
 	pthread_mutex_unlock(philo->left);

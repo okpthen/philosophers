@@ -1,39 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_sleep.c                                      :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kazokada <kazokada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/25 20:29:06 by kazuhiro          #+#    #+#             */
-/*   Updated: 2024/05/29 12:37:15 by kazokada         ###   ########.fr       */
+/*   Created: 2024/05/25 18:36:40 by kazuhiro          #+#    #+#             */
+/*   Updated: 2024/05/29 12:37:28 by kazokada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philosophers.h"
 
-int	check_end(t_philo *philo)
+void	print_philo(t_philo *philo, int i)
 {
-	int	i;
+	long	time;
 
-	i = 0;
+	pthread_mutex_lock(&philo->rule->print);
 	pthread_mutex_lock(&philo->rule->end_m);
 	if (philo->rule->end == 1)
-		i = 1;
-	pthread_mutex_unlock(&philo->rule->end_m);
-	return (i);
-}
-
-void	philo_sleeping(t_philo *philo)
-{
-	long	start;
-
-	print_philo(philo, SLEEP);
-	start = get_time();
-	while ((get_time() - start) < philo->rule->sleep + 1)
 	{
-		if (check_end(philo))
-			break ;
+		pthread_mutex_unlock(&philo->rule->end_m);
+		pthread_mutex_unlock(&philo->rule->print);
+		return ;
 	}
-	print_philo(philo, THINK);
+	time = get_time() - philo->start;
+	pthread_mutex_unlock(&philo->rule->end_m);
+	if (i == FORK)
+		printf(MES_FORK, time, philo->id);
+	else if (i == THINK)
+		printf(MES_THINK, time, philo->id);
+	else if (i == SLEEP)
+		printf(MES_SLEEP, time, philo->id);
+	else if (i == EAT)
+	{
+		printf(MES_FORK, time, philo->id);
+		printf(MES_EAT, time, philo->id);
+	}
+	pthread_mutex_unlock(&philo->rule->print);
 }
